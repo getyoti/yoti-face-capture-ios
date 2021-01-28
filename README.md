@@ -1,6 +1,6 @@
 # YotiFaceCapture
 
-YotiFaceCapture uses the front facing camera to perform face detection, then validates frames where a face has been detected according to Yoti's DeepFas specifications and finally, it returns a result that will either contain a cropped image containing a face or an error.
+YotiFaceCapture provides a simplified way of capturing a face. It performs face detection from the front facing camera, analyses those frames and produces an optimised cropped image of the captured face.
 
 ## Requirements
 - iOS 11.0+
@@ -35,12 +35,12 @@ let faceCaptureViewController = FaceCapture.faceCaptureViewController()
 faceCaptureViewController.delegate = self
 ```
 
-### 3. Start camera feed and analysis process
+### 3. Start camera feed and analysis
 Start the camera feed
 ```swift
 faceCaptureViewController.startCamera()
 ```
-Start the analysis process
+Start the analysis
 ```swift
 faceCaptureViewController.startAnalyzing(withConfiguration: .default)
 ```
@@ -77,7 +77,7 @@ func faceCapture(originalImage: UIImage?, didResult result: FaceCaptureResult) {
 ```
 
 ### 4. Customize framework configuration
-Create a FaceCaptureConfiguration object and pass the configuration when calling start analyzing method
+Provide a FaceCaptureConfiguration instance when calling the startAnalyzing method
 ```swift
 let faceCaptureConfiguration = FaceCaptureConfiguration(scanningArea: view.frame,
                                                         imageQuality: .medium)

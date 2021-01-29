@@ -1,5 +1,5 @@
 //
-// Copyright © 2020 Yoti Ltd. All rights reserved.
+// Copyright © 2021 Yoti Ltd. All rights reserved.
 //
 
 import UIKit

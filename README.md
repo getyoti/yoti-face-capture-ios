@@ -28,7 +28,7 @@ Import the framework in your implementation:
 import YotiFaceCapture
 ```
 
-### 2. Create FaceCaptureViewController 
+### 2. Create FaceCaptureViewController
 Fetch FaceCaptureViewController from framework and set delegate
 ```swift
 let faceCaptureViewController = FaceCapture.faceCaptureViewController()
@@ -76,7 +76,7 @@ func faceCapture(originalImage: UIImage?, didResult result: FaceCaptureResult) {
 }
 ```
 
-### 4. Customize framework configuration
+### 5. Customize framework configuration
 Provide a FaceCaptureConfiguration instance when calling the startAnalyzing method
 ```swift
 let faceCaptureConfiguration = FaceCaptureConfiguration(scanningArea: view.frame,

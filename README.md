@@ -3,7 +3,7 @@
 YotiFaceCapture provides a simplified way of capturing a face. It performs face detection from the front facing camera, analyses those frames and produces an optimised cropped image of the captured face.
 
 ## Requirements
-- iOS 11.0+
+- iOS 12.0+
 - Swift 5.3+
 
 ## Installation
@@ -13,7 +13,7 @@ Make sure you've installed and are running the latest version of:
 ### CocoaPods
 Add the following to your [`Podfile`](https://guides.cocoapods.org/using/the-podfile.html) and run `pod install` from its directory:
 ```bash
-platform :ios, '11.0'
+platform :ios, '12.0'
 
 target 'TargetName' do
   use_frameworks!
@@ -80,6 +80,14 @@ func faceCapture(originalImage: UIImage?, didResult result: FaceCaptureResult) {
 Provide a FaceCaptureConfiguration instance when calling the startAnalyzing method
 ```swift
 let faceCaptureConfiguration = FaceCaptureConfiguration(scanningArea: view.frame,
-                                                        imageQuality: .medium)
+                                                        imageQuality: .medium,
+                                                        validationOptions: [.faceNotStraight])
 faceCaptureViewController.startAnalyzing(withConfiguration: faceCaptureConfiguration)    
+```
+
+The validation options available are:
+```swift
+case eyesNotOpen
+case faceNotStraight
+case faceNotStable(requiredFrames: Int)
 ```

@@ -19,6 +19,12 @@ extension FaceCaptureResultError {
                 return "Face not centered"
             case .faceAnalysisFailed:
                 return "Face analysis failed"
+            case .eyesNotOpen:
+                return "Eyes not open"
+            case .faceNotStable:
+                return "Face not stable"
+            case .faceNotStraight:
+                return "Face not straight"
         }
     }
 }

@@ -37,43 +37,44 @@ final class CameraViewController: UIViewController {
     }
     
     @objc private func startFaceAnalysis() {
-        let faceCaptureConfiguration = FaceCaptureConfiguration(scanningArea: faceCaptureOverlayView.faceDetectionArea,
-                                                                imageQuality: .default)
+        let faceCaptureConfiguration = Configuration(scanningArea: faceCaptureOverlayView.faceDetectionArea,
+                                                     imageQuality: .default)
         faceCaptureViewController.startAnalyzing(withConfiguration: faceCaptureConfiguration)
     }
 }
 
 // MARK: - FaceCaptureViewDelegate
 extension CameraViewController: FaceCaptureViewDelegate {
-    func faceCapture(didTransitionToState state: FaceCaptureState) {
+    func faceCaptureStateDidChange(to state: FaceCaptureState) {
         switch state {
-            case .success(.cameraReady):
+            case .cameraReady:
                 faceCaptureOverlayView.isButtonEnabled = true
                 faceCaptureOverlayView.setInstructionLabelText("Align your face here")
-            case .success(.cameraStopped),
-                 .success(.analyzing):
+            case .cameraStopped,
+                 .analyzing:
                 faceCaptureOverlayView.isButtonEnabled = false
-            case .failure(let error):
-                faceCaptureOverlayView.isButtonEnabled = false
-                showAlert(title: "Error",
-                          message: "An error occurred: \(error)",
-                          buttons: [.init(title: "OK",
-                                          style: .cancel,
-                                          handler: nil)])
+            @unknown default:
+                faceCaptureStateFailed(withError: .invalidState)
         }
     }
     
-    func faceCapture(originalImage: UIImage?,
-                     didResult result: FaceCaptureResult) {
-        switch result {
-            case .success(let successResult):
-                guard case .validFrame(let analysisInformation) = successResult else { return }
-                faceCaptureOverlayView.setInstructionLabelText("Valid frame")
-                faceCaptureViewController.stopAnalyzing()
-                navigateToFaceResultView(with: analysisInformation)
-            case .failure(let error):
-                faceCaptureOverlayView.setInstructionLabelText(error.displayErrorMessage)
-        }
+    func faceCaptureStateFailed(withError error: FaceCaptureStateError) {
+        faceCaptureOverlayView.isButtonEnabled = false
+        showAlert(title: "Error",
+                  message: "An error occurred: \(error)",
+                  buttons: [.init(title: "OK",
+                                  style: .cancel,
+                                  handler: nil)])
+    }
+    
+    func faceCaptureDidAnalyzeImage(_ originalImage: UIImage?, withAnalysis analysis: FaceCaptureAnalysis) {
+        faceCaptureOverlayView.setInstructionLabelText("Valid frame")
+        faceCaptureViewController.stopAnalyzing()
+        navigateToFaceResultView(with: analysis)
+    }
+    
+    func faceCaptureDidAnalyzeImage(_ originalImage: UIImage?, withError error: FaceCaptureAnalysisError) {
+        faceCaptureOverlayView.setInstructionLabelText(error.displayErrorMessage)
     }
 }
 
@@ -106,9 +107,9 @@ private extension CameraViewController {
         }
     }
     
-    func navigateToFaceResultView(with information: FaceCaptureAnalysisInformation) {
+    func navigateToFaceResultView(with information: FaceCaptureAnalysis) {
         guard let faceResultViewController = storyboard?.instantiateViewController(withIdentifier: "FaceResultViewController") as? FaceResultViewController else { return }
-        faceResultViewController.analysisInformation = information
+        faceResultViewController.faceCaptureAnalysis = information
         navigationController?.pushViewController(faceResultViewController,
                                                  animated: true)
     }

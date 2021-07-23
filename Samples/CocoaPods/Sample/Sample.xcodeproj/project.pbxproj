@@ -21,7 +21,7 @@
 		C847BE6E25C428EE00579F8A /* PrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C847BE6D25C428EE00579F8A /* PrimaryButton.swift */; };
 		C847BE7125C4293D00579F8A /* UIColor+PrimaryButtonColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C847BE7025C4293D00579F8A /* UIColor+PrimaryButtonColor.swift */; };
 		C847BE7425C429F400579F8A /* UIImage+ImageWithColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C847BE7325C429F400579F8A /* UIImage+ImageWithColor.swift */; };
-		C847BE7725C42B6000579F8A /* FaceCaptureResultError+DisplayErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C847BE7625C42B6000579F8A /* FaceCaptureResultError+DisplayErrorMessage.swift */; };
+		C847BE7725C42B6000579F8A /* FaceCaptureAnalysisError+DisplayErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C847BE7625C42B6000579F8A /* FaceCaptureAnalysisError+DisplayErrorMessage.swift */; };
 		C847BEC825C434C400579F8A /* FaceResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C847BEC725C434C400579F8A /* FaceResultViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -43,7 +43,7 @@
 		C847BE6D25C428EE00579F8A /* PrimaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButton.swift; sourceTree = "<group>"; };
 		C847BE7025C4293D00579F8A /* UIColor+PrimaryButtonColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+PrimaryButtonColor.swift"; sourceTree = "<group>"; };
 		C847BE7325C429F400579F8A /* UIImage+ImageWithColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+ImageWithColor.swift"; sourceTree = "<group>"; };
-		C847BE7625C42B6000579F8A /* FaceCaptureResultError+DisplayErrorMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FaceCaptureResultError+DisplayErrorMessage.swift"; sourceTree = "<group>"; };
+		C847BE7625C42B6000579F8A /* FaceCaptureAnalysisError+DisplayErrorMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FaceCaptureAnalysisError+DisplayErrorMessage.swift"; sourceTree = "<group>"; };
 		C847BEC725C434C400579F8A /* FaceResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceResultViewController.swift; sourceTree = "<group>"; };
 		D68A0ADF68D0F675ABEB27BB /* Pods-Sample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Sample.release.xcconfig"; path = "Target Support Files/Pods-Sample/Pods-Sample.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -138,7 +138,7 @@
 		C847BE5A25C4241C00579F8A /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				C847BE7625C42B6000579F8A /* FaceCaptureResultError+DisplayErrorMessage.swift */,
+				C847BE7625C42B6000579F8A /* FaceCaptureAnalysisError+DisplayErrorMessage.swift */,
 				C847BE7025C4293D00579F8A /* UIColor+PrimaryButtonColor.swift */,
 				C847BE7325C429F400579F8A /* UIImage+ImageWithColor.swift */,
 				C847BE5C25C4243400579F8A /* UIViewController+AlertExtension.swift */,
@@ -306,7 +306,7 @@
 				C847BEC825C434C400579F8A /* FaceResultViewController.swift in Sources */,
 				C81DB86525C3251E000912FC /* CameraViewController.swift in Sources */,
 				C81DB86725C3251E000912FC /* SceneDelegate.swift in Sources */,
-				C847BE7725C42B6000579F8A /* FaceCaptureResultError+DisplayErrorMessage.swift in Sources */,
+				C847BE7725C42B6000579F8A /* FaceCaptureAnalysisError+DisplayErrorMessage.swift in Sources */,
 				C847BE6E25C428EE00579F8A /* PrimaryButton.swift in Sources */,
 				C847BE6525C4277D00579F8A /* FaceCaptureOverlayView.swift in Sources */,
 			);

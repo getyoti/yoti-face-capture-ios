@@ -4,7 +4,7 @@
 
 import YotiFaceCapture
 
-extension FaceCaptureResultError {
+extension FaceCaptureAnalysisError {
     var displayErrorMessage: String {
         switch self {
             case .noFaceDetected:
@@ -25,6 +25,8 @@ extension FaceCaptureResultError {
                 return "Face not stable"
             case .faceNotStraight:
                 return "Face not straight"
+            @unknown default:
+                return "Invalid Result"
         }
     }
 }

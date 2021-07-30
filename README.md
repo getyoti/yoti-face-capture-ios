@@ -50,38 +50,66 @@ Whenever required, both camera feed and analysis process can be stopped
 faceCaptureViewController.stopCamera()
 faceCaptureViewController.stopAnalyzing()
 ```
+
 ### 4. Receive framework state and analysis results
 Conform to FaceCaptureViewDelegate
 ```swift
-func faceCapture(didTransitionToState state: FaceCaptureState) {
+func faceCaptureStateDidChange(to state: FaceCaptureState) {
     switch state {
-        case .success(.cameraReady):
+        case .cameraReady:
             break
-        case .success(.analyzing):
+        case .analyzing:
             break
-        case .success(.cameraStopped):
-            break
-        case .failure(let error):
+        case .cameraStopped:
             break
     }
 }
 
-func faceCapture(originalImage: UIImage?, didResult result: FaceCaptureResult) {
-    switch result {
-        case .success(.validFrame(let information)):
+func faceCaptureStateFailed(withError error: FaceCaptureStateError) {
+    switch error {
+        case .cameraNotAccessible:
             break
-        case .failure(let error):
+        case .cameraInitializingError:
+            break
+        case .invalidState:
+            break
+    }
+}
+
+func faceCaptureDidAnalyzeImage(_ originalImage: UIImage?, withAnalysis analysis: FaceCaptureAnalysis) {
+
+}
+
+func faceCaptureDidAnalyzeImage(_ originalImage: UIImage?, withError error: FaceCaptureAnalysisError) {
+    switch error {
+        case .faceAnalysisFailed:
+            break
+        case .noFaceDetected:
+            break
+        case .multipleFaces:
+            break
+        case .eyesNotOpen:
+            break
+        case .faceTooSmall:
+            break
+        case .faceTooBig:
+            break
+        case .faceNotCentered:
+            break
+        case .faceNotStable:
+            break
+        case .faceNotStraight:
             break
     }
 }
 ```
 
 ### 5. Customize framework configuration
-Provide a FaceCaptureConfiguration instance when calling the startAnalyzing method
+Provide a Configuration instance when calling the startAnalyzing method
 ```swift
-let faceCaptureConfiguration = FaceCaptureConfiguration(scanningArea: view.frame,
-                                                        imageQuality: .medium,
-                                                        validationOptions: [.faceNotStraight])
+let faceCaptureConfiguration = Configuration(scanningArea: view.frame,
+                                             imageQuality: .medium,
+                                             validationOptions: [.faceNotStraight])
 faceCaptureViewController.startAnalyzing(withConfiguration: faceCaptureConfiguration)    
 ```
 

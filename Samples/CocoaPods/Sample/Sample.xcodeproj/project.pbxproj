@@ -80,10 +80,10 @@
 		C81DB82F25C3245C000912FC = {
 			isa = PBXGroup;
 			children = (
-				C81DB85825C32509000912FC /* Sources */,
-				C81DB83925C3245C000912FC /* Products */,
-				859C914790ADDF3839173BA6 /* Pods */,
 				23BE67C18DD2312CD441AB4F /* Frameworks */,
+				859C914790ADDF3839173BA6 /* Pods */,
+				C81DB83925C3245C000912FC /* Products */,
+				C81DB85825C32509000912FC /* Sources */,
 			);
 			sourceTree = "<group>";
 		};
@@ -460,10 +460,7 @@
 				DEVELOPMENT_TEAM = 6VUTP72GG4;
 				INFOPLIST_FILE = "$(SRCROOT)/Sources/Sample/SupportingFiles/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.yoti.mobile.ios.yotiFaceCapture.Sample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -481,10 +478,7 @@
 				DEVELOPMENT_TEAM = 6VUTP72GG4;
 				INFOPLIST_FILE = "$(SRCROOT)/Sources/Sample/SupportingFiles/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.yoti.mobile.ios.yotiFaceCapture.Sample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

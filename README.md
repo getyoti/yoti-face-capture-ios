@@ -8,7 +8,8 @@ YotiFaceCapture provides a simplified way of capturing a face. It performs face 
 
 ## Installation
 Make sure you've installed and are running the latest version of:
-- [CocoaPods](https://guides.cocoapods.org/using/getting-started.html)
+- [CocoaPods](https://guides.cocoapods.org/using/getting-started.html) (Optional)
+- [Carthage](https://github.com/Carthage/Carthage) (Optional)
 
 ### CocoaPods
 Add the following to your [`Podfile`](https://guides.cocoapods.org/using/the-podfile.html) and run `pod install` from its directory:
@@ -20,6 +21,24 @@ target 'TargetName' do
   pod 'YotiFaceCapture'
 end
 ```
+
+### Carthage
+#### 1. Locate the necessary files
+Please refer to the [Installation](Installation/Carthage) folder of this repository, and locate the [`Cartfile`](https://github.com/Carthage/Carthage/blob/master/Documentation/Artifacts.md#cartfile), `Input.xcfilelist` and `Output.xcfilelist`.
+
+#### 2. Build dependencies
+Add the `Cartfile` to the root of your project directory, and run `carthage bootstrap` from there.
+
+#### 3. Copy frameworks
+On your application targets' `Build Phases` tab:
+- Click `+` icon and choose `New Run Script Phase`
+- Create a script with a shell of your choice (e.g. `/bin/sh`)
+- Add the following to the script area below the shell:
+```bash
+/usr/local/bin/carthage copy-frameworks
+```
+- Add the `Input.xcfilelist` to the `Input File Lists` section of the script
+- Add the `Output.xcfilelist` to the `Output File Lists` section of the script
 
 ## Integration
 ### 1. Import frameworks

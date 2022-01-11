@@ -3,10 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D033E32278DEC1F00BCD105 /* YotiFaceCapture.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D033E31278DEC1F00BCD105 /* YotiFaceCapture.xcframework */; };
+		0D033E33278DEC1F00BCD105 /* YotiFaceCapture.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0D033E31278DEC1F00BCD105 /* YotiFaceCapture.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C81DB86525C3251E000912FC /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81DB85A25C3251E000912FC /* CameraViewController.swift */; };
 		C81DB86625C3251E000912FC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81DB85C25C3251E000912FC /* AppDelegate.swift */; };
 		C81DB86725C3251E000912FC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81DB85D25C3251E000912FC /* SceneDelegate.swift */; };
@@ -24,9 +26,22 @@
 		C847BEC825C434C400579F8A /* FaceResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C847BEC725C434C400579F8A /* FaceResultViewController.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		0D033E34278DEC1F00BCD105 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				0D033E33278DEC1F00BCD105 /* YotiFaceCapture.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		20E7AB1226BD77BC00699B2B /* Output.xcfilelist */ = {isa = PBXFileReference; lastKnownFileType = text.xcfilelist; path = Output.xcfilelist; sourceTree = "<group>"; };
-		20E7AB1326BD77BC00699B2B /* Input.xcfilelist */ = {isa = PBXFileReference; lastKnownFileType = text.xcfilelist; path = Input.xcfilelist; sourceTree = "<group>"; };
+		0D033E31278DEC1F00BCD105 /* YotiFaceCapture.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = YotiFaceCapture.xcframework; path = Carthage/Build/YotiFaceCapture.xcframework; sourceTree = "<group>"; };
 		C81DB83825C3245C000912FC /* Sample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C81DB85A25C3251E000912FC /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		C81DB85C25C3251E000912FC /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -51,17 +66,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0D033E32278DEC1F00BCD105 /* YotiFaceCapture.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0D033E30278DEC1E00BCD105 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0D033E31278DEC1F00BCD105 /* YotiFaceCapture.xcframework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		C81DB82F25C3245C000912FC = {
 			isa = PBXGroup;
 			children = (
 				C81DB83925C3245C000912FC /* Products */,
 				C81DB85825C32509000912FC /* Sources */,
+				0D033E30278DEC1E00BCD105 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -109,8 +134,6 @@
 			isa = PBXGroup;
 			children = (
 				C81DB86425C3251E000912FC /* Info.plist */,
-				20E7AB1326BD77BC00699B2B /* Input.xcfilelist */,
-				20E7AB1226BD77BC00699B2B /* Output.xcfilelist */,
 			);
 			path = SupportingFiles;
 			sourceTree = "<group>";
@@ -172,7 +195,7 @@
 				C81DB83425C3245C000912FC /* Sources */,
 				C81DB83525C3245C000912FC /* Frameworks */,
 				C81DB83625C3245C000912FC /* Resources */,
-				20E7AB1126BD775C00699B2B /* Copy Frameworks */,
+				0D033E34278DEC1F00BCD105 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -228,29 +251,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		20E7AB1126BD775C00699B2B /* Copy Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"$(SRCROOT)/Sources/Sample/SupportingFiles/Input.xcfilelist",
-			);
-			inputPaths = (
-			);
-			name = "Copy Frameworks";
-			outputFileListPaths = (
-				"$(SRCROOT)/Sources/Sample/SupportingFiles/Output.xcfilelist",
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		C81DB83425C3245C000912FC /* Sources */ = {
@@ -346,7 +346,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"@loader_path/Frameworks",
 					"@executable_path/Frameworks",
@@ -406,7 +406,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"@loader_path/Frameworks",
 					"@executable_path/Frameworks",
@@ -429,8 +429,11 @@
 				DEVELOPMENT_TEAM = 6VUTP72GG4;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "$(SRCROOT)/Sources/Sample/SupportingFiles/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.yoti.mobile.ios.yotiFaceCapture.Sample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -447,8 +450,11 @@
 				DEVELOPMENT_TEAM = 6VUTP72GG4;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "$(SRCROOT)/Sources/Sample/SupportingFiles/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.yoti.mobile.ios.yotiFaceCapture.Sample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

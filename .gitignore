@@ -1,5 +1,5 @@
-*.xcodeproj/xcuserdata
-*.xcworkspace/xcuserdata
+xcuserdata
+*.xcuserstate
 .DS_Store
 .build
 /Samples/Carthage/Carthage

@@ -119,6 +119,8 @@ func faceCaptureDidAnalyzeImage(_ originalImage: UIImage?, withError error: Face
             break
         case .faceNotStraight:
             break
+        case .environmentTooDark:
+            break
     }
 }
 ```
@@ -137,4 +139,5 @@ The validation options available are:
 case eyesNotOpen
 case faceNotStraight
 case faceNotStable(requiredFrames: Int)
+case environmentLuminosity
 ```

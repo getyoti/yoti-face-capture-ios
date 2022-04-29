@@ -88,7 +88,7 @@ private extension CameraViewController {
     func setUpOverlayView() {
         view.addSubview(faceCaptureOverlayView)
         NSLayoutConstraint.activate([
-            faceCaptureOverlayView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            faceCaptureOverlayView.topAnchor.constraint(equalTo: view.topAnchor),
             faceCaptureOverlayView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             faceCaptureOverlayView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             faceCaptureOverlayView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)

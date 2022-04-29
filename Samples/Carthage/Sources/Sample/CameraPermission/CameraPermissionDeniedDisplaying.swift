@@ -10,20 +10,26 @@ protocol CameraPermissionDeniedDisplaying {
 
 extension CameraPermissionDeniedDisplaying where Self: UIViewController {
     func showCameraPermissionDeniedAlert() {
-        let cancelButton = UIAlertAction(title: "Cancel",
-                                         style: .cancel,
-                                         handler: nil)
-        let settingsButton = UIAlertAction(title: "Settings",
-                                           style: .default) { [weak self] _ in
+        let cancelButton = UIAlertAction(
+            title: "Cancel",
+            style: .cancel,
+            handler: nil
+        )
+        let settingsButton = UIAlertAction(
+            title: "Settings",
+            style: .default
+        ) { [weak self] _ in
             self?.openSettings()
         }
 
-        showAlert(title: "Camera permissions needed",
-                  message: "Open Settings and allow access to your camera so you can continue.",
-                  buttons: [
-                    cancelButton,
-                    settingsButton
-                  ])
+        showAlert(
+            title: "Camera permissions needed",
+            message: "Open Settings and allow access to your camera so you can continue.",
+            buttons: [
+                cancelButton,
+                settingsButton,
+            ]
+        )
     }
 
     func openSettings() {

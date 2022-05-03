@@ -139,5 +139,5 @@ The validation options available are:
 case eyesNotOpen
 case faceNotStraight
 case faceNotStable(requiredFrames: Int)
-case environmentLuminosity
+case environmentTooDark
 ```

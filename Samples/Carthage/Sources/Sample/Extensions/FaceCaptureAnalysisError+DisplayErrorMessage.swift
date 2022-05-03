@@ -25,6 +25,8 @@ extension FaceCaptureAnalysisError {
                 return "Face not stable"
             case .faceNotStraight:
                 return "Face not straight"
+            case .environmentTooDark:
+                return "Environment too dark"
             @unknown default:
                 return "Invalid Result"
         }

@@ -2,7 +2,6 @@
 ## Version 4.1.1
 
 Disables serialisation of the debugging options.
-Please, check [README.md](https://github.com/getyoti/yoti-face-capture-ios/blob/main/README.md) for more details.
 
 
 ## Version 4.1.0

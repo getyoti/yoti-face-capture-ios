@@ -1,4 +1,9 @@
 # ChangeLog
+## Version 4.1.1
+
+Disables serialisation of the debugging options.
+
+
 ## Version 4.1.0
 
 Introduced a new validation option called `environmentTooDark` that can be set as part of the `Configuration` object. This new validation option is activated by default, meaning that the SDK will require a bright environment to return a valid frame containing a face. In order to migrate from previous versions, it is needed to include any required validation option except the `environmentTooDark` option when creating the `Configuration` object.

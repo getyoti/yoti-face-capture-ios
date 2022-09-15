@@ -1,7 +1,16 @@
 # ChangeLog
+
+## Version 5.0.0
+
+Replaced the `scanningArea` configuration parameter with `faceCenter`. The new parameter is the normalised point, in relation to the view provided by the SDK, where the user should centre their face.
+This removes ambiguity and prevents situations where an area bigger than the scanned image could be provided.
+
+Improvements and fixes.
+
+
 ## Version 4.1.1
 
-Disables serialisation of the debugging options.
+Disabled serialisation of the debugging options.
 
 
 ## Version 4.1.0

@@ -136,7 +136,15 @@ let faceCaptureConfiguration = Configuration(faceCenter: faceCenter,
 faceCaptureViewController.startAnalyzing(withConfiguration: faceCaptureConfiguration)    
 ```
 The `faceCenter` parameter is the normalised point, in relation to `faceCaptureViewController.view`, in the centre of the area where you expect the user to place their face.
-The analysis will return a `faceNotCentered` error they move away from that point significantly.
+E.g.:
+```Swift
+CGPoint(x: 0.5, y: 0.5) // Centre
+CGPoint(x: 0.0, y: 0.0) // Top left
+CGPoint(x: 1.0, y: 1.0) // Bottom right
+```
+
+The analysis will return a `faceNotCentered` error if the user moves away from that point significantly.
+
 
 The validation options available are:
 ```swift

@@ -128,11 +128,23 @@ func faceCaptureDidAnalyzeImage(_ originalImage: UIImage?, withError error: Face
 ### 5. Customize framework configuration
 Provide a Configuration instance when calling the startAnalyzing method
 ```swift
-let faceCaptureConfiguration = Configuration(scanningArea: view.frame,
+let faceCenter = CGPoint(x: view.center.x / view.bounds.width
+			 y: view.center.y / view.bounds.height)
+let faceCaptureConfiguration = Configuration(faceCenter: faceCenter,
                                              imageQuality: .medium,
                                              validationOptions: [.faceNotStraight])
 faceCaptureViewController.startAnalyzing(withConfiguration: faceCaptureConfiguration)    
 ```
+The `faceCenter` parameter is the normalised point, in relation to `faceCaptureViewController.view`, in the centre of the area where you expect the user to place their face.
+E.g.:
+```Swift
+CGPoint(x: 0.5, y: 0.5) // Centre
+CGPoint(x: 0.0, y: 0.0) // Top left
+CGPoint(x: 1.0, y: 1.0) // Bottom right
+```
+
+The analysis will return a `faceNotCentered` error if the user moves away from that point significantly.
+
 
 The validation options available are:
 ```swift

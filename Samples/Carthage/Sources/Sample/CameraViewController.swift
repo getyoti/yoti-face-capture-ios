@@ -17,6 +17,14 @@ final class CameraViewController: UIViewController {
     private lazy var faceCaptureOverlayView: FaceCaptureOverlayViewable & UIView = FaceCaptureOverlayView(
         action: startFaceAnalysis
     )
+    
+    private lazy var faceCenter: CGPoint = {
+        let faceCaptureViewDimensions = faceCaptureViewController.view.bounds.size
+        return CGPoint(
+            x: 0.5,
+            y: faceCaptureOverlayView.faceDetectionArea.midY / faceCaptureViewDimensions.height
+        )
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,7 +48,7 @@ final class CameraViewController: UIViewController {
 
     @objc private func startFaceAnalysis() {
         let faceCaptureConfiguration = Configuration(
-            scanningArea: faceCaptureOverlayView.faceDetectionArea,
+            faceCenter: faceCenter,
             imageQuality: .default
         )
         faceCaptureViewController.startAnalyzing(withConfiguration: faceCaptureConfiguration)

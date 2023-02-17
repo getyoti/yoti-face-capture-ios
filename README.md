@@ -5,6 +5,7 @@ YotiFaceCapture provides a simplified way of capturing a face. It performs face 
 ## Requirements
 - iOS 13.0+
 - Swift 5.5+
+- ~75KB • YotiFaceCapture uses native APIs for feature detection and image processing, thus keeping our library small    
 
 ## Installation
 Make sure you've installed and are running the latest version of:
@@ -70,7 +71,7 @@ faceCaptureViewController.stopCamera()
 faceCaptureViewController.stopAnalyzing()
 ```
 
-### 4. Receive framework state and analysis results
+### 4. Receive the capture state and analysis results
 Conform to FaceCaptureViewDelegate
 ```swift
 func faceCaptureStateDidChange(to state: FaceCaptureState) {
@@ -125,7 +126,7 @@ func faceCaptureDidAnalyzeImage(_ originalImage: UIImage?, withError error: Face
 }
 ```
 
-### 5. Customize framework configuration
+### 5. Configure the capture
 Provide a Configuration instance when calling the startAnalyzing method
 ```swift
 let faceCenter = CGPoint(x: view.center.x / view.bounds.width
@@ -156,4 +157,4 @@ case environmentTooDark
 
 ## Support
 If you have any other questions please do not hesitate to contact clientsupport@yoti.com.
-Once we have answered your question we may contact you again to discuss Yoti products and services. If you'd prefer us not to do this, please let us know when you e-mail.
+Once we have answered your question we may contact you again to discuss Yoti products and services. If you'd prefer us not to do this, please let us know when you e-mail us.

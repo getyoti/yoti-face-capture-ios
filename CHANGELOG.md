@@ -1,5 +1,9 @@
 # ChangeLog
 
+## Version 5.0.1
+
+Reduced minimum platform version requirement of CocoaPods spec from iOS 13.0 to 11.0.
+
 ## Version 5.0.0
 
 Replaced the `scanningArea` configuration parameter with `faceCenter`. The new parameter is the normalised point, in relation to the view provided by the SDK, where the user should centre their face.
@@ -7,11 +11,9 @@ This removes ambiguity and prevents situations where an area bigger than the sca
 
 Improvements and fixes.
 
-
 ## Version 4.1.1
 
 Disabled serialisation of the debugging options.
-
 
 ## Version 4.1.0
 

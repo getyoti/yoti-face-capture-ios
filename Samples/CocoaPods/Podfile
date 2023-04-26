@@ -2,6 +2,5 @@ platform :ios, '13.0'
 
 target 'Sample' do
   use_frameworks!
-  
-  pod 'YotiFaceCapture', '5.0.0'
+  pod 'YotiFaceCapture'
 end

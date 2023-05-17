@@ -1,5 +1,9 @@
 # ChangeLog
 
+## Version 5.1.0
+
+Enabled landscape modes
+
 ## Version 5.0.1
 
 Reduced minimum platform version requirement of CocoaPods spec from iOS 13.0 to 11.0.

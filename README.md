@@ -129,22 +129,21 @@ func faceCaptureDidAnalyzeImage(_ originalImage: UIImage?, withError error: Face
 ### 5. Configure the capture
 Provide a Configuration instance when calling the startAnalyzing method
 ```swift
-let faceCenter = CGPoint(x: view.center.x / view.bounds.width
-			 y: view.center.y / view.bounds.height)
-let faceCaptureConfiguration = Configuration(faceCenter: faceCenter,
+let faceCaptureConfiguration = Configuration(faceCenter: CGPoint(x: 0.5, y: 0.5),
                                              imageQuality: .medium,
                                              validationOptions: [.faceNotStraight])
 faceCaptureViewController.startAnalyzing(withConfiguration: faceCaptureConfiguration)    
 ```
-The `faceCenter` parameter is the normalised point, in relation to `faceCaptureViewController.view`, in the centre of the area where you expect the user to place their face.
-E.g.:
-```Swift
-CGPoint(x: 0.5, y: 0.5) // Centre
-CGPoint(x: 0.0, y: 0.0) // Top left
-CGPoint(x: 1.0, y: 1.0) // Bottom right
-```
+The `faceCenter` parameter is the normalised point, in relation to `faceCaptureViewController.view`, where you expect the centre of the detected face to be.<br>
+The frame of the detected face is returned by `FaceCaptureViewDelegate` in `originalImageFaceCoordinates` as part of `FaceCaptureAnalysis`.<br>
+The analysis will return a `faceNotCentered` error if the distance between the two points is significant.
 
-The analysis will return a `faceNotCentered` error if the user moves away from that point significantly.
+Examples:
+
+- The `faceCenter` is configured to be `CGPoint(x: 0.5, y: 0.45)`, represented by the intersection of the red and blue lines in the image below.
+The centre of the detected face should be positioned in the vicinity of that point to result in a valid capture.
+
+- The reference shape has been moved up and the `faceCenter` is now configured to `CGPoint(x: 0.5, y: 0.35)`.
 
 
 The validation options available are:

@@ -127,7 +127,7 @@ func faceCaptureDidAnalyzeImage(_ originalImage: UIImage?, withError error: Face
 ```
 
 ### 5. Configure the capture
-Provide a Configuration instance when calling the startAnalyzing method
+Provide a Configuration instance when calling the `startAnalyzing` method
 ```swift
 let faceCaptureConfiguration = Configuration(faceCenter: CGPoint(x: 0.5, y: 0.5),
                                              imageQuality: .medium,
@@ -140,11 +140,18 @@ The analysis will return a `faceNotCentered` error if the distance between the t
 
 Examples:
 
-- The `faceCenter` is configured to be `CGPoint(x: 0.5, y: 0.45)`, represented by the intersection of the red and blue lines in the image below.
+1. The `faceCenter` is configured to be `CGPoint(x: 0.5, y: 0.45)`, represented by the intersection of the red and blue lines in the image below.<br>
 The centre of the detected face should be positioned in the vicinity of that point to result in a valid capture.
 
-- The reference shape has been moved up and the `faceCenter` is now configured to `CGPoint(x: 0.5, y: 0.35)`.
+<p align="center">
+<img src="https://github.com/getyoti/yoti-face-capture-ios/assets/60880814/e63e3845-0c72-4037-8449-e43331c21a35" width="30%" alt="Face centre. x: 0.5, y: 0.45">
+</p>
 
+2. The reference shape has been moved up and the `faceCenter` is now configured to `CGPoint(x: 0.5, y: 0.35)`.
+
+<p align="center">
+<img src="https://github.com/getyoti/yoti-face-capture-ios/assets/60880814/9563a277-b84c-40c2-aae6-d2618beab93e" width="30%" alt="Face centre. x: 0.5, y: 0.35">
+</p>
 
 The validation options available are:
 ```swift

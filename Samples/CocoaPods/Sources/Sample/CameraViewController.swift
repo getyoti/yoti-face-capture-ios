@@ -17,7 +17,7 @@ final class CameraViewController: UIViewController {
     private lazy var faceCaptureOverlayView: FaceCaptureOverlayViewable & UIView = FaceCaptureOverlayView(
         action: startFaceAnalysis
     )
-    
+
     private lazy var faceCenter: CGPoint = {
         let faceCaptureViewDimensions = faceCaptureViewController.view.bounds.size
         return CGPoint(

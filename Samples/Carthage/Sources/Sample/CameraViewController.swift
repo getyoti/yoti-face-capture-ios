@@ -14,17 +14,12 @@ final class CameraViewController: UIViewController {
         return faceCaptureViewController
     }()
 
-    private lazy var faceCaptureOverlayView: FaceCaptureOverlayViewable & UIView = FaceCaptureOverlayView(
-        action: startFaceAnalysis
+    private lazy var faceCaptureOverlayView: FaceCaptureOverlayViewable & UIView = FaceCaptureOverlayView()
+
+    private lazy var faceCenter = CGPoint(
+        x: 0.5,
+        y: faceCaptureOverlayView.faceDetectionArea.midY / faceCaptureOverlayView.bounds.height
     )
-    
-    private lazy var faceCenter: CGPoint = {
-        let faceCaptureViewDimensions = faceCaptureViewController.view.bounds.size
-        return CGPoint(
-            x: 0.5,
-            y: faceCaptureOverlayView.faceDetectionArea.midY / faceCaptureViewDimensions.height
-        )
-    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,18 +36,6 @@ final class CameraViewController: UIViewController {
         super.viewWillDisappear(animated)
         removeFaceCaptureViewController()
     }
-
-    func startCamera() {
-        faceCaptureViewController.startCamera()
-    }
-
-    @objc private func startFaceAnalysis() {
-        let faceCaptureConfiguration = Configuration(
-            faceCenter: faceCenter,
-            imageQuality: .default
-        )
-        faceCaptureViewController.startAnalyzing(withConfiguration: faceCaptureConfiguration)
-    }
 }
 
 // MARK: - FaceCaptureViewDelegate
@@ -60,18 +43,17 @@ extension CameraViewController: FaceCaptureViewDelegate {
     func faceCaptureStateDidChange(to state: FaceCaptureState) {
         switch state {
             case .cameraReady:
-                faceCaptureOverlayView.isButtonEnabled = true
                 faceCaptureOverlayView.setInstructionLabelText("Align your face here")
+                startFaceAnalysis()
             case .cameraStopped,
                 .analyzing:
-                faceCaptureOverlayView.isButtonEnabled = false
+                break
             @unknown default:
                 faceCaptureStateFailed(withError: .invalidState)
         }
     }
 
     func faceCaptureStateFailed(withError error: FaceCaptureStateError) {
-        faceCaptureOverlayView.isButtonEnabled = false
         showAlert(
             title: "Error",
             message: "An error occurred: \(error)",
@@ -87,12 +69,23 @@ extension CameraViewController: FaceCaptureViewDelegate {
 
     func faceCaptureDidAnalyzeImage(_ originalImage: UIImage?, withAnalysis analysis: FaceCaptureAnalysis) {
         faceCaptureOverlayView.setInstructionLabelText("Valid frame")
-        faceCaptureViewController.stopAnalyzing()
-        navigateToFaceResultView(with: analysis)
+        faceCaptureOverlayView.setCapturedImageWithData(analysis.croppedImageData)
+        faceCaptureOverlayView.addFaceDetectionLayers(
+            faceCenter: CGPoint(
+                x: faceCaptureOverlayView.bounds.width * faceCenter.x,
+                y: faceCaptureOverlayView.bounds.height * faceCenter.y
+            ),
+            faceFrame: analysis.originalImageFaceCoordinates,
+            croppedFacePoint: analysis.croppedImageFaceCoordinates.origin,
+            croppedImageSize: UIImage(data: analysis.croppedImageData)!.size,
+            originalImageSize: originalImage!.size
+        )
     }
 
     func faceCaptureDidAnalyzeImage(_ originalImage: UIImage?, withError error: FaceCaptureAnalysisError) {
         faceCaptureOverlayView.setInstructionLabelText(error.displayErrorMessage)
+        faceCaptureOverlayView.setCapturedImageWithData(nil)
+        faceCaptureOverlayView.removeFaceDetectionLayers()
     }
 }
 
@@ -125,17 +118,16 @@ private extension CameraViewController {
         }
     }
 
-    func navigateToFaceResultView(with information: FaceCaptureAnalysis) {
-        guard
-            let faceResultViewController = storyboard?.instantiateViewController(
-                withIdentifier: "FaceResultViewController"
-            ) as? FaceResultViewController
-        else { return }
-        faceResultViewController.faceCaptureAnalysis = information
-        navigationController?.pushViewController(
-            faceResultViewController,
-            animated: true
+    func startCamera() {
+        faceCaptureViewController.startCamera()
+    }
+
+    func startFaceAnalysis() {
+        let faceCaptureConfiguration = Configuration(
+            faceCenter: faceCenter,
+            imageQuality: .default
         )
+        faceCaptureViewController.startAnalyzing(withConfiguration: faceCaptureConfiguration)
     }
 }
 

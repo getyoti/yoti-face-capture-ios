@@ -6,16 +6,19 @@ import UIKit
 
 protocol FaceCaptureOverlayViewable {
     var faceDetectionArea: CGRect { get }
-    var isButtonEnabled: Bool { get set }
     func setInstructionLabelText(_ text: String)
-    func setPrimaryButtonText(_ text: String)
+    func setCapturedImageWithData(_ data: Data?)
+    func addFaceDetectionLayers(
+        faceCenter: CGPoint,
+        faceFrame: CGRect,
+        croppedFacePoint: CGPoint,
+        croppedImageSize: CGSize,
+        originalImageSize: CGSize
+    )
+    func removeFaceDetectionLayers()
 }
 
 final class FaceCaptureOverlayView: UIView {
-    typealias Action = () -> Void
-
-    var action: Action?
-
     @AutoLayoutView(image: "cameraFaceFrame")
     var faceFrameImageView: UIImageView = .init()
 
@@ -25,13 +28,33 @@ final class FaceCaptureOverlayView: UIView {
     @AutoLayoutView
     var instructionLabel: UILabel = .init()
 
-    @PrimaryButton(title: "Start Face Analysis")
-    var primaryButton: UIButton = .init()
+    private lazy var debugButton: RoundedButton = {
+        let button = RoundedButton(imageName: "icoScanningArea")
+        button.action = debugButtonAction
+        button.switchOff()
+        return button
+    }()
 
-    convenience init(action: @escaping Action) {
-        self.init()
-        self.action = action
-    }
+    private lazy var capturedImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.layer.borderWidth = 2.0
+        return imageView
+    }()
+
+    private lazy var faceDetectionLayer: CAShapeLayer = {
+        let layer = CAShapeLayer()
+        layer.isHidden = true
+        return layer
+    }()
+
+    private lazy var croppedFaceDetectionLayer: CAShapeLayer = {
+        let layer = CAShapeLayer()
+        layer.isHidden = true
+        return layer
+    }()
+
+    private var captureImageWidthConstraint: NSLayoutConstraint?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -43,20 +66,27 @@ final class FaceCaptureOverlayView: UIView {
         setUpView()
     }
 
-    @objc func primaryButtonAction() {
-        action?()
+    func debugButtonAction(state: RoundedButtonState) {
+        switch state {
+            case .on:
+                faceDetectionLayer.isHidden = false
+                croppedFaceDetectionLayer.isHidden = false
+            case .off:
+                faceDetectionLayer.isHidden = true
+                croppedFaceDetectionLayer.isHidden = true
+        }
     }
 }
 
-// MARK: - Helpers
+// MARK: - Setup
 private extension FaceCaptureOverlayView {
     func setUpView() {
         translatesAutoresizingMaskIntoConstraints = false
         setUpImageView()
         setUpFaceDetectionView()
         setUpInstructionLabel()
-        setUpStartAnalysisButton()
-        isButtonEnabled = false
+        setUpDebugButton()
+        setUpCapturedImageView()
     }
 
     func setUpImageView() {
@@ -115,30 +145,26 @@ private extension FaceCaptureOverlayView {
                 relatedBy: .equal,
                 toItem: self,
                 attribute: .centerY,
-                multiplier: 0.88,
+                multiplier: 0.6,
                 constant: 0
             ),
         ])
     }
 
-    func setUpStartAnalysisButton() {
-        addSubview(primaryButton)
-        primaryButton.addTarget(
-            self,
-            action: #selector(primaryButtonAction),
-            for: .touchUpInside
-        )
+    func setUpDebugButton() {
+        addSubview(debugButton)
         NSLayoutConstraint.activate([
-            primaryButton.centerXAnchor.constraint(equalTo: centerXAnchor),
-            .init(
-                item: primaryButton,
-                attribute: .centerY,
-                relatedBy: .equal,
-                toItem: self,
-                attribute: .centerY,
-                multiplier: 1.5,
-                constant: 0
-            ),
+            debugButton.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 40.0),
+            debugButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -20.0),
+        ])
+    }
+
+    func setUpCapturedImageView() {
+        addSubview(capturedImageView)
+        NSLayoutConstraint.activate([
+            capturedImageView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -40.0),
+            capturedImageView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -20.0),
+            capturedImageView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.15),
         ])
     }
 }
@@ -149,23 +175,130 @@ extension FaceCaptureOverlayView: FaceCaptureOverlayViewable {
         faceDetectionView.frame
     }
 
-    var isButtonEnabled: Bool {
-        get {
-            primaryButton.isEnabled
-        }
-        set {
-            primaryButton.isEnabled = newValue
-        }
-    }
-
     func setInstructionLabelText(_ text: String) {
         instructionLabel.text = text
     }
 
-    func setPrimaryButtonText(_ text: String) {
-        primaryButton.setTitle(
-            text,
-            for: .normal
+    func setCapturedImageWithData(_ data: Data?) {
+        guard let data, let image = UIImage(data: data) else {
+            capturedImageView.isHidden = true
+            return
+        }
+        capturedImageView.isHidden = false
+        capturedImageView.image = image
+
+        if captureImageWidthConstraint != nil { return }
+        captureImageWidthConstraint = capturedImageView.widthAnchor.constraint(
+            equalToConstant: (image.size.width / image.size.height) * capturedImageView.bounds.height
         )
+        captureImageWidthConstraint?.isActive = true
+    }
+
+    func addFaceDetectionLayers(
+        faceCenter: CGPoint,
+        faceFrame: CGRect,
+        croppedFacePoint: CGPoint,
+        croppedImageSize: CGSize,
+        originalImageSize: CGSize
+    ) {
+        guard
+            !faceDetectionLayer.isHidden
+                && !croppedFaceDetectionLayer.isHidden
+        else { return }
+
+        let transformation = CGAffineTransform(scaleX: -1, y: 1)
+            .translatedBy(x: -bounds.width, y: 0)
+
+        let scaledFaceDetectionFrame = faceFrame.scaledBasedOn(
+            originalImageSize: originalImageSize,
+            faceCaptureViewSize: bounds.size
+        ).applying(transformation)
+
+        let croppedFaceFrame = CGRect(
+            x: croppedFacePoint.x,
+            y: croppedFacePoint.y,
+            width: croppedImageSize.width,
+            height: croppedImageSize.height
+        )
+
+        let scaledCroppedFaceDetectionFrame = croppedFaceFrame.scaledBasedOn(
+            originalImageSize: originalImageSize,
+            faceCaptureViewSize: bounds.size
+        ).applying(transformation)
+
+        removeFaceDetectionLayers()
+
+        // Yellow circle - face center
+        let faceCenterFrame = CGRect(
+            x: faceCenter.x - 5.0,
+            y: faceCenter.y - 5.0,
+            width: 10.0,
+            height: 10.0
+        )
+        layer.addSublayer(
+            layer(
+                frame: faceCenterFrame,
+                strokeColor: UIColor.yellow.cgColor,
+                fillColor: UIColor.yellow.cgColor,
+                isCircle: true
+            )
+        )
+
+        // Red box - detected face
+        faceDetectionLayer = layer(
+            frame: scaledFaceDetectionFrame,
+            strokeColor: UIColor.red.cgColor
+        )
+        layer.addSublayer(faceDetectionLayer)
+
+        // Red circle - detected face center
+        let faceDetectionCenterFrame = CGRect(
+            x: scaledFaceDetectionFrame.midX - 5.0,
+            y: scaledFaceDetectionFrame.midY - 5.0,
+            width: 10.0,
+            height: 10.0
+        )
+        faceDetectionLayer.addSublayer(
+            layer(
+                frame: faceDetectionCenterFrame,
+                strokeColor: UIColor.red.cgColor,
+                fillColor: UIColor.red.cgColor,
+                isCircle: true
+            )
+        )
+
+        // Green box - cropped area
+        croppedFaceDetectionLayer = layer(
+            frame: scaledCroppedFaceDetectionFrame,
+            strokeColor: UIColor.green.cgColor
+        )
+        layer.addSublayer(croppedFaceDetectionLayer)
+    }
+
+    func removeFaceDetectionLayers() {
+        faceDetectionLayer.removeFromSuperlayer()
+        croppedFaceDetectionLayer.removeFromSuperlayer()
+    }
+}
+
+// MARK: - Helpers
+private extension FaceCaptureOverlayView {
+    func layer(
+        frame: CGRect,
+        strokeColor: CGColor,
+        fillColor: CGColor = UIColor.clear.cgColor,
+        isCircle: Bool = false
+    ) -> CAShapeLayer {
+
+        let path = UIBezierPath(
+            roundedRect: frame,
+            cornerRadius: isCircle ? frame.width * 0.5 : 0.0
+        ).cgPath
+        let layer = CAShapeLayer()
+        layer.path = path
+        layer.fillColor = fillColor
+        layer.strokeColor = strokeColor
+        layer.lineWidth = 2.0
+        return layer
     }
 }

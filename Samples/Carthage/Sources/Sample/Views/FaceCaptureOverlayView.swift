@@ -187,9 +187,10 @@ extension FaceCaptureOverlayView: FaceCaptureOverlayViewable {
         capturedImageView.isHidden = false
         capturedImageView.image = image
 
-        if captureImageWidthConstraint != nil { return }
+        if let captureImageWidthConstraint { capturedImageView.removeConstraint(captureImageWidthConstraint) }
         captureImageWidthConstraint = capturedImageView.widthAnchor.constraint(
-            equalToConstant: (image.size.width / image.size.height) * capturedImageView.bounds.height
+            equalTo: capturedImageView.heightAnchor,
+            multiplier: image.size.width / image.size.height
         )
         captureImageWidthConstraint?.isActive = true
     }

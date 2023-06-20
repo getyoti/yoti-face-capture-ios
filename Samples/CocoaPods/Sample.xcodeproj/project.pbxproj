@@ -17,11 +17,11 @@
 		C847BE6025C424C900579F8A /* CameraPermissionDeniedDisplaying.swift in Sources */ = {isa = PBXBuildFile; fileRef = C847BE5F25C424C900579F8A /* CameraPermissionDeniedDisplaying.swift */; };
 		C847BE6525C4277D00579F8A /* FaceCaptureOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C847BE6425C4277D00579F8A /* FaceCaptureOverlayView.swift */; };
 		C847BE6A25C4284000579F8A /* AutoLayoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C847BE6925C4284000579F8A /* AutoLayoutView.swift */; };
-		C847BE6E25C428EE00579F8A /* PrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C847BE6D25C428EE00579F8A /* PrimaryButton.swift */; };
 		C847BE7125C4293D00579F8A /* UIColor+PrimaryButtonColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C847BE7025C4293D00579F8A /* UIColor+PrimaryButtonColor.swift */; };
 		C847BE7425C429F400579F8A /* UIImage+ImageWithColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C847BE7325C429F400579F8A /* UIImage+ImageWithColor.swift */; };
 		C847BE7725C42B6000579F8A /* FaceCaptureAnalysisError+DisplayErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C847BE7625C42B6000579F8A /* FaceCaptureAnalysisError+DisplayErrorMessage.swift */; };
-		C847BEC825C434C400579F8A /* FaceResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C847BEC725C434C400579F8A /* FaceResultViewController.swift */; };
+		CE3FF8222A41A3F3002178BC /* CGRect+Scaling.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3FF8212A41A3F3002178BC /* CGRect+Scaling.swift */; };
+		CE3FF8242A41A439002178BC /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE3FF8232A41A439002178BC /* RoundedButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,11 +37,11 @@
 		C847BE5F25C424C900579F8A /* CameraPermissionDeniedDisplaying.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPermissionDeniedDisplaying.swift; sourceTree = "<group>"; };
 		C847BE6425C4277D00579F8A /* FaceCaptureOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceCaptureOverlayView.swift; sourceTree = "<group>"; };
 		C847BE6925C4284000579F8A /* AutoLayoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoLayoutView.swift; sourceTree = "<group>"; };
-		C847BE6D25C428EE00579F8A /* PrimaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButton.swift; sourceTree = "<group>"; };
 		C847BE7025C4293D00579F8A /* UIColor+PrimaryButtonColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+PrimaryButtonColor.swift"; sourceTree = "<group>"; };
 		C847BE7325C429F400579F8A /* UIImage+ImageWithColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+ImageWithColor.swift"; sourceTree = "<group>"; };
 		C847BE7625C42B6000579F8A /* FaceCaptureAnalysisError+DisplayErrorMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FaceCaptureAnalysisError+DisplayErrorMessage.swift"; sourceTree = "<group>"; };
-		C847BEC725C434C400579F8A /* FaceResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceResultViewController.swift; sourceTree = "<group>"; };
+		CE3FF8212A41A3F3002178BC /* CGRect+Scaling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGRect+Scaling.swift"; sourceTree = "<group>"; };
+		CE3FF8232A41A439002178BC /* RoundedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,7 +83,6 @@
 			isa = PBXGroup;
 			children = (
 				C81DB85A25C3251E000912FC /* CameraViewController.swift */,
-				C847BEC725C434C400579F8A /* FaceResultViewController.swift */,
 				C847BE5B25C4242100579F8A /* CameraPermission */,
 				C81DB85B25C3251E000912FC /* Delegates */,
 				C847BE5A25C4241C00579F8A /* Extensions */,
@@ -114,6 +113,7 @@
 		C847BE5A25C4241C00579F8A /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				CE3FF8212A41A3F3002178BC /* CGRect+Scaling.swift */,
 				C847BE7625C42B6000579F8A /* FaceCaptureAnalysisError+DisplayErrorMessage.swift */,
 				C847BE7025C4293D00579F8A /* UIColor+PrimaryButtonColor.swift */,
 				C847BE7325C429F400579F8A /* UIImage+ImageWithColor.swift */,
@@ -133,8 +133,9 @@
 		C847BE6325C4274400579F8A /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				C847BE6425C4277D00579F8A /* FaceCaptureOverlayView.swift */,
 				C847BE6825C4282A00579F8A /* PropertyWrappers */,
+				C847BE6425C4277D00579F8A /* FaceCaptureOverlayView.swift */,
+				CE3FF8232A41A439002178BC /* RoundedButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -143,7 +144,6 @@
 			isa = PBXGroup;
 			children = (
 				C847BE6925C4284000579F8A /* AutoLayoutView.swift */,
-				C847BE6D25C428EE00579F8A /* PrimaryButton.swift */,
 			);
 			path = PropertyWrappers;
 			sourceTree = "<group>";
@@ -279,12 +279,12 @@
 				C847BE7425C429F400579F8A /* UIImage+ImageWithColor.swift in Sources */,
 				C847BE7125C4293D00579F8A /* UIColor+PrimaryButtonColor.swift in Sources */,
 				C847BE6A25C4284000579F8A /* AutoLayoutView.swift in Sources */,
-				C847BEC825C434C400579F8A /* FaceResultViewController.swift in Sources */,
 				C81DB86525C3251E000912FC /* CameraViewController.swift in Sources */,
+				CE3FF8242A41A439002178BC /* RoundedButton.swift in Sources */,
 				C81DB86725C3251E000912FC /* SceneDelegate.swift in Sources */,
 				C847BE7725C42B6000579F8A /* FaceCaptureAnalysisError+DisplayErrorMessage.swift in Sources */,
-				C847BE6E25C428EE00579F8A /* PrimaryButton.swift in Sources */,
 				C847BE6525C4277D00579F8A /* FaceCaptureOverlayView.swift in Sources */,
+				CE3FF8222A41A3F3002178BC /* CGRect+Scaling.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

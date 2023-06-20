@@ -16,10 +16,7 @@ final class CameraViewController: UIViewController {
 
     private lazy var faceCaptureOverlayView: FaceCaptureOverlayViewable & UIView = FaceCaptureOverlayView()
 
-    private lazy var faceCenter = CGPoint(
-        x: 0.5,
-        y: faceCaptureOverlayView.faceDetectionArea.midY / faceCaptureOverlayView.bounds.height
-    )
+    private let faceCenter = CGPoint(x: 0.5, y: 0.45)
 
     override func viewDidLoad() {
         super.viewDidLoad()

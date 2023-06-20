@@ -5,7 +5,6 @@
 import UIKit
 
 protocol FaceCaptureOverlayViewable {
-    var faceDetectionArea: CGRect { get }
     func setInstructionLabelText(_ text: String)
     func setCapturedImageWithData(_ data: Data?)
     func addFaceDetectionLayers(
@@ -83,7 +82,6 @@ private extension FaceCaptureOverlayView {
     func setUpView() {
         translatesAutoresizingMaskIntoConstraints = false
         setUpImageView()
-        setUpFaceDetectionView()
         setUpInstructionLabel()
         setUpDebugButton()
         setUpCapturedImageView()
@@ -97,32 +95,6 @@ private extension FaceCaptureOverlayView {
             faceFrameImageView.topAnchor.constraint(equalTo: topAnchor),
             faceFrameImageView.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
-    }
-
-    func setUpFaceDetectionView() {
-        addSubview(faceDetectionView)
-        faceDetectionView.backgroundColor = .clear
-        NSLayoutConstraint.activate([
-            faceDetectionView.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor),
-            faceDetectionView.widthAnchor.constraint(
-                equalTo: safeAreaLayoutGuide.widthAnchor,
-                multiplier: 0.9
-            ),
-            faceDetectionView.heightAnchor.constraint(
-                equalTo: safeAreaLayoutGuide.heightAnchor,
-                multiplier: 0.65
-            ),
-            .init(
-                item: faceDetectionView,
-                attribute: .centerY,
-                relatedBy: .equal,
-                toItem: self,
-                attribute: .centerY,
-                multiplier: 0.85,
-                constant: 0
-            ),
-        ])
-        bringSubviewToFront(faceDetectionView)
     }
 
     func setUpInstructionLabel() {
@@ -171,10 +143,6 @@ private extension FaceCaptureOverlayView {
 
 // MARK: - FaceCaptureOverlayViewable
 extension FaceCaptureOverlayView: FaceCaptureOverlayViewable {
-    var faceDetectionArea: CGRect {
-        faceDetectionView.frame
-    }
-
     func setInstructionLabelText(_ text: String) {
         instructionLabel.text = text
     }

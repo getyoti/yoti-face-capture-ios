@@ -13,45 +13,25 @@ final class CameraViewController: UIViewController {
         faceCaptureViewController.view.translatesAutoresizingMaskIntoConstraints = false
         return faceCaptureViewController
     }()
-
-    private lazy var faceCaptureOverlayView: FaceCaptureOverlayViewable & UIView = FaceCaptureOverlayView(
-        action: startFaceAnalysis
-    )
     
-    private lazy var faceCenter: CGPoint = {
-        let faceCaptureViewDimensions = faceCaptureViewController.view.bounds.size
-        return CGPoint(
-            x: 0.5,
-            y: faceCaptureOverlayView.faceDetectionArea.midY / faceCaptureViewDimensions.height
-        )
-    }()
-
+    private lazy var faceCaptureOverlayView: FaceCaptureOverlayViewable & UIView = FaceCaptureOverlayView()
+    
+    private let faceCenter = CGPoint(x: 0.5, y: 0.45)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpView()
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         addFaceCaptureViewController()
         requestCameraAccess()
     }
-
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         removeFaceCaptureViewController()
-    }
-
-    func startCamera() {
-        faceCaptureViewController.startCamera()
-    }
-
-    @objc private func startFaceAnalysis() {
-        let faceCaptureConfiguration = Configuration(
-            faceCenter: faceCenter,
-            imageQuality: .default
-        )
-        faceCaptureViewController.startAnalyzing(withConfiguration: faceCaptureConfiguration)
     }
 }
 
@@ -60,18 +40,17 @@ extension CameraViewController: FaceCaptureViewDelegate {
     func faceCaptureStateDidChange(to state: FaceCaptureState) {
         switch state {
             case .cameraReady:
-                faceCaptureOverlayView.isButtonEnabled = true
                 faceCaptureOverlayView.setInstructionLabelText("Align your face here")
+                startFaceAnalysis()
             case .cameraStopped,
-                .analyzing:
-                faceCaptureOverlayView.isButtonEnabled = false
+                    .analyzing:
+                break
             @unknown default:
                 faceCaptureStateFailed(withError: .invalidState)
         }
     }
-
+    
     func faceCaptureStateFailed(withError error: FaceCaptureStateError) {
-        faceCaptureOverlayView.isButtonEnabled = false
         showAlert(
             title: "Error",
             message: "An error occurred: \(error)",
@@ -84,15 +63,26 @@ extension CameraViewController: FaceCaptureViewDelegate {
             ]
         )
     }
-
+    
     func faceCaptureDidAnalyzeImage(_ originalImage: UIImage?, withAnalysis analysis: FaceCaptureAnalysis) {
         faceCaptureOverlayView.setInstructionLabelText("Valid frame")
-        faceCaptureViewController.stopAnalyzing()
-        navigateToFaceResultView(with: analysis)
+        faceCaptureOverlayView.setCapturedImageWithData(analysis.croppedImageData)
+        faceCaptureOverlayView.addFaceDetectionLayers(
+            faceCenter: CGPoint(
+                x: faceCaptureOverlayView.bounds.width * faceCenter.x,
+                y: faceCaptureOverlayView.bounds.height * faceCenter.y
+            ),
+            faceFrame: analysis.originalImageFaceCoordinates,
+            croppedFacePoint: analysis.croppedImageFaceCoordinates.origin,
+            croppedImageSize: UIImage(data: analysis.croppedImageData)!.size,
+            originalImageSize: originalImage!.size
+        )
     }
-
+    
     func faceCaptureDidAnalyzeImage(_ originalImage: UIImage?, withError error: FaceCaptureAnalysisError) {
         faceCaptureOverlayView.setInstructionLabelText(error.displayErrorMessage)
+        faceCaptureOverlayView.setCapturedImageWithData(nil)
+        faceCaptureOverlayView.removeFaceDetectionLayers()
     }
 }
 
@@ -102,7 +92,7 @@ private extension CameraViewController {
         view.backgroundColor = .systemGray
         setUpOverlayView()
     }
-
+    
     func setUpOverlayView() {
         view.addSubview(faceCaptureOverlayView)
         NSLayoutConstraint.activate([
@@ -112,7 +102,7 @@ private extension CameraViewController {
             faceCaptureOverlayView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
         ])
     }
-
+    
     func requestCameraAccess() {
         AVCaptureDevice.requestAccess(for: .video) { [weak self] granted in
             DispatchQueue.main.async {
@@ -124,18 +114,17 @@ private extension CameraViewController {
             }
         }
     }
-
-    func navigateToFaceResultView(with information: FaceCaptureAnalysis) {
-        guard
-            let faceResultViewController = storyboard?.instantiateViewController(
-                withIdentifier: "FaceResultViewController"
-            ) as? FaceResultViewController
-        else { return }
-        faceResultViewController.faceCaptureAnalysis = information
-        navigationController?.pushViewController(
-            faceResultViewController,
-            animated: true
+    
+    func startCamera() {
+        faceCaptureViewController.startCamera()
+    }
+    
+    func startFaceAnalysis() {
+        let faceCaptureConfiguration = Configuration(
+            faceCenter: faceCenter,
+            imageQuality: .default
         )
+        faceCaptureViewController.startAnalyzing(withConfiguration: faceCaptureConfiguration)
     }
 }
 
@@ -147,7 +136,7 @@ private extension CameraViewController {
         view.sendSubviewToBack(faceCaptureViewController.view)
         faceCaptureViewController.didMove(toParent: self)
     }
-
+    
     func removeFaceCaptureViewController() {
         faceCaptureViewController.willMove(toParent: nil)
         faceCaptureViewController.view.removeFromSuperview()

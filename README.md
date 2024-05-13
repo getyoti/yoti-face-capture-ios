@@ -8,9 +8,12 @@ YotiFaceCapture provides a simplified way of capturing a face. It performs face 
 - ~75KB • YotiFaceCapture uses native APIs for feature detection and image processing, thus keeping our library small    
 
 ## Installation
-Make sure you've installed and are running the latest version of:
-- [CocoaPods](https://guides.cocoapods.org/using/getting-started.html) (Optional)
-- [Carthage](https://github.com/Carthage/Carthage) (Optional)
+### Swift Package Manager
+Add the following line to your `Package.swift` file:
+```swift
+.package(url: "https://github.com/getyoti/yoti-face-capture-ios.git", from: "5.0.0")
+```
+...or add our package in Xcode via `File -> Swift Packages -> Add Package Dependency...` using the URL of this repository.
 
 ### CocoaPods
 Add the following to your [`Podfile`](https://guides.cocoapods.org/using/the-podfile.html) and run `pod install` from its directory:
@@ -162,5 +165,4 @@ case environmentTooDark
 ```
 
 ## Support
-If you have any other questions please do not hesitate to contact us here: https://support.yoti.com
-Once we have answered your question we may contact you again to discuss Yoti products and services. If you'd prefer us not to do this, please let us know when you e-mail us.
+For any questions or support please contact us [here](https://support.yoti.com). Once we have answered your question, we may contact you again to discuss Yoti products and services. If you'd prefer us not to do this, please let us know when you e-mail.

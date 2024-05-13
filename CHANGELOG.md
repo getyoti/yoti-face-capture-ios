@@ -1,8 +1,16 @@
 # ChangeLog
 
+## Version 5.1.2
+
+Adds support for Swift Package Manager.
+
+## Version 5.1.1
+
+Fixes [#20](https://github.com/getyoti/yoti-face-capture-ios/issues/20).
+
 ## Version 5.1.0
 
-Enabled landscape modes
+Enabled landscape modes.
 
 ## Version 5.0.1
 

@@ -1,5 +1,14 @@
 # ChangeLog
 
+## Version 8.0.0
+Update FaceCaptureStateError to include an NSError to provide richer feedback
+
+## Version 7.0.0
+Swift 6 support
+
+## Version 6.0.0
+Internal Release (nothing changed to public API)
+
 ## Version 5.1.2
 
 Adds support for Swift Package Manager.

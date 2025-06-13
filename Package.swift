@@ -10,8 +10,8 @@ let package = Package(
     targets: [
         .binaryTarget(
             name: "YotiFaceCapture",
-            url: "https://github.com/getyoti/yoti-face-capture-ios/releases/download/v5.1.2/YotiFaceCapture.zip",
-            checksum: "ad8fa97c5f4e24ee87dd6670b4c7c82c2724802b71c8ecf5a39d090cbc3164ac"
+            url: "https://github.com/getyoti/yoti-face-capture-ios/releases/download/v8.0.0/YotiFaceCapture.zip",
+            checksum: "97550b604051f56038d1d7af7a6976527694be9d228cca83fbd3f25e7fa0caa9"
         )
     ]
 )

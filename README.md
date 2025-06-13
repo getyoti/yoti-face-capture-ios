@@ -89,10 +89,13 @@ func faceCaptureStateDidChange(to state: FaceCaptureState) {
 }
 
 func faceCaptureStateFailed(withError error: FaceCaptureStateError) {
-    switch error {
+    switch error.code {
         case .cameraNotAccessible:
             break
         case .cameraInitializingError:
+            if let underlyingError = (error.underlyingError as NSError) {
+                print(underlyingError.code)
+            }
             break
         case .invalidState:
             break

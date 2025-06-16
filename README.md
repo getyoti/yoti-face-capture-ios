@@ -11,7 +11,7 @@ YotiFaceCapture provides a simplified way of capturing a face. It performs face 
 ### Swift Package Manager
 Add the following line to your `Package.swift` file:
 ```swift
-.package(url: "https://github.com/getyoti/yoti-face-capture-ios.git", from: "5.0.0")
+.package(url: "https://github.com/getyoti/yoti-face-capture-ios.git", from: "8.0.0")
 ```
 ...or add our package in Xcode via `File -> Swift Packages -> Add Package Dependency...` using the URL of this repository.
 
@@ -88,17 +88,27 @@ func faceCaptureStateDidChange(to state: FaceCaptureState) {
     }
 }
 
+/*
+FaceCaptureStateError contains two instance properties:
+- code: FaceCaptureStateErrorCode
+- underlyingError: Error?
+
+FaceCaptureStateErrorCode is an enum that contains the following cases
+- cameraNotAccessible
+- cameraInitializingError
+- invalidState
+*/
+
 func faceCaptureStateFailed(withError error: FaceCaptureStateError) {
     switch error.code {
         case .cameraNotAccessible:
-            break
+            print("Print camera permissions not authorized")
         case .cameraInitializingError:
-            if let underlyingError = (error.underlyingError as NSError) {
-                print(underlyingError.code)
+            if let underlyingError = error.underlyingError as NSError? {
+                print("Camera initialization failed: \(underlyingError.localizedDescription)")
             }
-            break
-        case .invalidState:
-            break
+        default:
+            print("Undefined error")
     }
 }
 

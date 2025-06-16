@@ -46,11 +46,24 @@ extension CameraViewController: FaceCaptureViewDelegate {
                     .analyzing:
                 break
             @unknown default:
-                faceCaptureStateFailed(withError: .invalidState)
+                return
         }
     }
     
     func faceCaptureStateFailed(withError error: FaceCaptureStateError) {
+        switch error.code {
+            case .cameraNotAccessible:
+                print("Print camera permissions not authorized")
+            case .cameraInitializingError:
+                if let underlyingError = error.underlyingError as NSError? {
+                    print("Camera initialization failed: \(underlyingError.localizedDescription)")
+                }
+            case .invalidState:
+                print("Undefined error")
+            @unknown default:
+                return
+        }
+        
         showAlert(
             title: "Error",
             message: "An error occurred: \(error)",

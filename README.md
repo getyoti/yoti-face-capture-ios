@@ -11,7 +11,7 @@ YotiFaceCapture provides a simplified way of capturing a face. It performs face 
 ### Swift Package Manager
 Add the following line to your `Package.swift` file:
 ```swift
-.package(url: "https://github.com/getyoti/yoti-face-capture-ios.git", from: "8.0.0")
+.package(url: "https://github.com/getyoti/yoti-face-capture-ios.git", from: "9.0.1")
 ```
 ...or add our package in Xcode via `File -> Swift Packages -> Add Package Dependency...` using the URL of this repository.
 
@@ -143,6 +143,13 @@ func faceCaptureDidAnalyzeImage(_ originalImage: UIImage?, withError error: Face
 ```
 
 ### 5. Configure the capture
+
+#### FaceCaptureUIConfiguration
+Provides further customization capabilities for the capture.
+- `increaseScreenBrigthnessDuringCapture`: Will increase the screen brightness to max level when the face capture UI launches. The default value is `true`
+
+#### Configuration
+
 Provide a Configuration instance when calling the `startAnalyzing` method
 ```swift
 let faceCaptureConfiguration = Configuration(faceCenter: CGPoint(x: 0.5, y: 0.5),
@@ -174,7 +181,13 @@ The validation options available are:
 case eyesNotOpen
 case faceNotStraight
 case faceNotStable(requiredFrames: Int)
-case environmentTooDark
+case environmentTooDark(threshold: EnvironmentLuminosityThreshold)
+```
+
+The environment luminosity threshold options are:
+```swift
+case flexible // Reduces luminosity threshold to assist cases of low light
+case strict
 ```
 
 ## Support

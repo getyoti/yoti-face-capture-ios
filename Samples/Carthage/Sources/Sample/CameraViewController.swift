@@ -8,9 +8,12 @@ import YotiFaceCapture
 
 final class CameraViewController: UIViewController {
     private lazy var faceCaptureViewController: YotiFaceCapture.FaceCaptureViewController = {
+        FaceCapture.uiConfiguration?.increaseScreenBrigthnessDuringCapture = true
+
         let faceCaptureViewController = FaceCapture.faceCaptureViewController()
         faceCaptureViewController.delegate = self
         faceCaptureViewController.view.translatesAutoresizingMaskIntoConstraints = false
+        
         return faceCaptureViewController
     }()
 
@@ -135,7 +138,11 @@ private extension CameraViewController {
     func startFaceAnalysis() {
         let faceCaptureConfiguration = Configuration(
             faceCenter: faceCenter,
-            imageQuality: .default
+            imageQuality: .default,
+            validationOptions: [
+                .eyesNotOpen,
+                .environmentTooDark(threshold: .flexible), //.environmentTooDark(threshold: .strict)
+            ]
         )
         faceCaptureViewController.startAnalyzing(withConfiguration: faceCaptureConfiguration)
     }

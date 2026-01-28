@@ -1,5 +1,9 @@
 # ChangeLog
 
+## Version 9.0.1
+- Introduces `FaceCaptureUIConfiguration` which allows the set of maximum screen brightness while capturing the photo.
+- Introduces two different levels for environmentLuminosity validator: `flexible` and `strict`
+
 ## Version 8.0.0
 Update FaceCaptureStateError to include an NSError to provide richer feedback
 

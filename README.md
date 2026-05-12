@@ -154,7 +154,8 @@ Provide a Configuration instance when calling the `startAnalyzing` method
 ```swift
 let faceCaptureConfiguration = Configuration(faceCenter: CGPoint(x: 0.5, y: 0.5),
                                              imageQuality: .medium,
-                                             validationOptions: [.faceNotStraight])
+                                             validationOptions: [.faceNotStraight],
+                                             discardsLateAnalysisResults: true)
 faceCaptureViewController.startAnalyzing(withConfiguration: faceCaptureConfiguration)    
 ```
 The `faceCenter` parameter is the normalised point, in relation to `faceCaptureViewController.view`, where you expect the centre of the detected face to be.<br>
@@ -189,6 +190,8 @@ The environment luminosity threshold options are:
 case flexible // Reduces luminosity threshold to assist cases of low light
 case strict
 ```
+
+The `discardsLateAnalysisResults` option: When `true` (the default), only one analysis result is in flight to the delegate at a time; results that arrive while the delegate is busy are dropped, not queued.
 
 ## Support
 For any questions or support please contact us [here](https://support.yoti.com). Once we have answered your question, we may contact you again to discuss Yoti products and services. If you'd prefer us not to do this, please let us know when you e-mail.

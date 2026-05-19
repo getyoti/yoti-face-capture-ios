@@ -10,7 +10,7 @@ you in respect of your use of the SDK (the "**User**"). If you
 We are Yoti Limited (the "**Provider**") a company registered in
 England and Wales, with company number _08998951_ and registered office
 at _6th Floor, 107 Leadenhall Street, London, EC3A 4AF_. You can
-contact us by writing to us at: <hello@yoti.com>, or at our registered
+contact us by writing to us at: <https://support.yoti.com/>, or at our registered
 office.
 
 1. **Interpretation**
@@ -72,7 +72,7 @@ office.
       Releases generally made available to its customers. Under these
       Terms the Provider offers no support function for the SDK but the
       User is encouraged to report any issues with the SDK by writing
-      to us at <sdksupport@yoti.com>. Any comments, suggestions for
+      to us at <https://support.yoti.com/>. Any comments, suggestions for
       enhancements or modifications ("Feedback") relating to the SDK or
       associated materials is provided on a non-confidential basis and
       the Provider may use the Feedback at its discretion and for any

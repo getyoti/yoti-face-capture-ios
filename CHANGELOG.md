@@ -1,5 +1,8 @@
 # ChangeLog
 
+## Version 9.1.0
+- Introduces an opt-out analysis result throttling mechanism under option `discardsLateAnalysisResults`, which discards results while the delegate is still busy handling the previous result.
+
 ## Version 9.0.1
 - Introduces `FaceCaptureUIConfiguration` which allows the set of maximum screen brightness while capturing the photo.
 - Introduces two different levels for environmentLuminosity validator: `flexible` and `strict`
